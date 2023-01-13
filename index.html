@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trust me</title>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1d1d1d;
+        }
+    </style>
+    <script>
+        let Isflip = false
+        let imgs = [
+            './haha/ha(0).jpg',
+            './haha/ha(1).jpg',
+            './haha/ha(2).jpg',
+            './haha/ha(3).jpg',
+            './haha/ha(4).jpg',
+            './haha/ha(5).jpg',
+            './haha/ha(7).jpg',
+            './haha/ha(8).jpg',
+            './haha/ha(9).jpg',
+            './haha/ha(10).jpg',
+            './haha/ha(11).jpg',
+            './haha/ha(12).jpg',
+            './haha/ha(13).jpg',
+            './haha/ha(14).jpg',
+            './haha/ha(15).jpg',
+            './haha/ha(16).jpg',
+        ]
+
+        let xs = [
+            '35%',
+            '25%',
+            '15%',
+            '0%',
+            '10%',
+            '20%',
+            '30%',
+            '40%'
+        ]
+
+        function playAudio() {
+            const audio = document.createElement("audio");
+            audio.src = "生日快樂歌.mp3";
+            audio.play();
+        }
+
+        function flip() {
+            if (Isflip) {
+                $('.party').css('transform','scale(1,1')
+                Isflip = false
+            } else {
+                $('.party').css('transform','scale(-1,1')
+                Isflip = true
+            }
+        }
+
+        function newImgObj() {
+            $('body').append(
+                `<img src=${imgs[Math.floor(Math.random() * imgs.length)]} class='z-20 absolute left-[1500px] top-[${xs[Math.floor(Math.random()*xs.length)]}] max-h-[60vh] marquee'>`
+            )
+            gsap.to('.marquee', {
+                x:"-2500px" ,duration:5, onComplete: function () {
+                    document.getElementsByClassName('.marquee').remove()
+                }
+            })
+        }
+
+        $(document).ready(function () {
+            gsap.set('#img', {
+                opacity: 0
+            })
+
+            $('#start-btn').click(function (e) {
+                e.preventDefault();
+                $(document).attr("title", "庭愷生日快樂");
+                playAudio()
+                gsap.fromTo('#img', {
+                    opacity: 0, scale: 0
+                }, {
+                    opacity: 1, scale: 1, duration: 2,delay:1
+                })
+                
+                gsap.fromTo('.party',{
+                    opacity: 0, scale: 0
+                }, {
+                    opacity: 1, scale: 1, duration: 2,delay:1
+                })
+
+                gsap.to('#start-btn', {
+                    opacity: 0
+                })
+                const end = setTimeout(function () {
+                    $('.hidden').css('display','block')
+                },5000)
+
+                const timer = setInterval(function () {
+                    newImgObj()
+                }, 5000)
+                const party = setInterval(function () {
+                    flip()
+                },500)
+
+
+            });
+        });
+    </script>
+
+</head>
+
+<body class="overflow-hidden">
+    <div>
+        <button id="start-btn" class="
+        text-white p-2 border rounded py-0 hover:border-[#05eafa] drop-shadow-[0_0px_25px_white] hover:drop-shadow-[0_0px_25px_#05eafa] hover:text-[#05eafa]
+        absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-10
+        ">trust me</button>
+        <img id='img' src="title.jpg" class="w-full h-screen opacity-0" alt="none">
+        <img src="partyHat.png" class="z-20 absolute top-0 left-0 party opacity-0" width="200px" alt="">
+        <img src="./haha/ha(0).jpg" class="z-20 absolute top-0 right-0 party opacity-0" width="200px" alt="">
+        <img src="hha.png" class="z-20 absolute bottom-0 left-0 party opacity-0" width="200px" alt="">
+        <img src="oh.png" class="z-20 absolute bottom-0 right-0 party opacity-0" width="200px" alt="">
+        <div class="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] z-10 text-center text-black text-[80px] hidden" style="-webkit-text-stroke: 2px #1c87c9;
+">庭愷生日快樂</div>
+        <!-- <audio id="audio" src="生日快樂歌.mp3" autoplay="false" preload="auto" loop="false"></audio> -->
+    </div>
+</body>
+
+</html>
